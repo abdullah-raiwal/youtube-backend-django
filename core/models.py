@@ -15,7 +15,7 @@ class UserManager(BaseUserManager):
 
         # check if avatar is not in extraFields
         if 'avatar' not in extraFields:
-            raise ValidationError('avatar is required')
+            raise ValueError('avatar is required')
 
         results = upload(extraFields['avatar'])
         user.avatar = results['url']

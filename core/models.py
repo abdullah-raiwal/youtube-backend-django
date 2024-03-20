@@ -14,15 +14,15 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         # check if avatar is not in extraFields
-        if 'avatar' not in extraFields:
-            raise ValueError('avatar is required')
+        # if 'avatar' not in extraFields:
+        #     raise ValueError('avatar is required')
 
-        results = upload(extraFields['avatar'])
-        user.avatar = results['url']
+        # results = upload(extraFields['avatar'])
+        # user['avatar'] = results['url']
 
-        if 'coverImage' in extraFields:
-            results = upload(extraFields['coverImage'])
-            user.coverImage = results['url']
+        # if 'coverImage' in extraFields:
+        #     results = upload(extraFields['coverImage'])
+        #     user.coverImage = results['url']
 
         email = self.normalize_email(email)
         user = self.model(email=email, **extraFields)
@@ -44,7 +44,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
 
-    avatar = CloudinaryField('avatar')
+    avatar = CloudinaryField('avatar', )
     coverImage = CloudinaryField('coverImage', blank=True)
     refreshToken = models.CharField(max_length=200, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)

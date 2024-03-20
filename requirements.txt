@@ -1,0 +1,8 @@
+django
+djangorestframework
+cloudinary
+python-dotenv
+dj-rest-auth
+django-allauth
+pillow
+djangorestframework-simplejwt

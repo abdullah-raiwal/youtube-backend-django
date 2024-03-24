@@ -13,17 +13,6 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
 
-        # check if avatar is not in extraFields
-        # if 'avatar' not in extraFields:
-        #     raise ValueError('avatar is required')
-
-        # results = upload(extraFields['avatar'])
-        # user['avatar'] = results['url']
-
-        # if 'coverImage' in extraFields:
-        #     results = upload(extraFields['coverImage'])
-        #     user.coverImage = results['url']
-
         email = self.normalize_email(email)
         user = self.model(email=email, **extraFields)
         user.set_password(password)

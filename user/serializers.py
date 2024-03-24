@@ -1,10 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.serializers import RegisterSerializer
-from cloudinary.models import CloudinaryField
-from allauth.account.adapter import get_adapter
-from django.core.exceptions import ValidationError
-from allauth.account.utils import setup_user_email
 from cloudinary.uploader import upload
 
 
@@ -12,7 +7,7 @@ class UserRegisterSerializer(RegisterSerializer):
 
     first_name = serializers.CharField()
     last_name = serializers.CharField()
-    avatar = serializers.ImageField()
+    avatar = serializers.ImageField(use_url = True)
 
     def get_cleaned_data(self):
         print(self.validated_data)
@@ -27,18 +22,15 @@ class UserRegisterSerializer(RegisterSerializer):
         }
 
     def save(self, request):
-        # Delegate user creation and password handling to RegisterSerializer
         user = super().save(request)
 
-        # Handle avatar upload (if provided) after user creation
         if self.cleaned_data.get('avatar'):
             try:
                 response = upload(
                     self.cleaned_data['avatar'])
                 user.avatar = response['url']
-                user.save()  # Save the user with the updated avatar URL
+                user.save()
             except Exception as e:
-                # Provide informative error message
                 raise serializers.ValidationError({'avatar': [str(e)]})
 
         return user

@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import (UserLoginView,
     email_confirm_redirect, password_reset_confirm_redirect)
-from dj_rest_auth.views import (LogoutView, UserDetailsView, LoginView)
+from dj_rest_auth.views import (LogoutView, UserDetailsView)
 
 from dj_rest_auth.registration.views import RegisterView
 from dj_rest_auth.registration.views import (

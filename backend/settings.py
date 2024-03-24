@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "core",
-    'user'
+    'user',
+    'drf_spectacular'
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -145,7 +146,8 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 REST_AUTH = {
     'USE_JWT': True,
@@ -175,3 +177,8 @@ EMAIL_CONFIRM_REDIRECT_BASE_URL = \
 # <PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL>/<uidb64>/<token>/
 PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = \
     "http://localhost:3000/password-reset/confirm/"
+
+
+SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
+}

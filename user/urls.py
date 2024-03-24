@@ -8,6 +8,8 @@ from dj_rest_auth.registration.views import (
     ResendEmailVerificationView, VerifyEmailView)
 
 from dj_rest_auth.views import (PasswordResetConfirmView, PasswordResetView)
+from drf_spectacular.views import SpectacularSwaggerView
+
 
 
 urlpatterns = [

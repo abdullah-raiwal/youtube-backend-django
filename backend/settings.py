@@ -16,7 +16,9 @@ SECRET_KEY = "django-insecure-b@3pca51k%$(j0mzgz_edmazn)(oi_eg0akhv^4+kk19^csv$3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+]
 
 
 # Application definition
@@ -29,6 +31,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'cloudinary', 
+    'cloudinary_storage',
     'allauth',
     'allauth.account',
     "rest_framework.authtoken",
@@ -183,3 +187,5 @@ SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
     'SCHEMA_PATH_PREFIX': r'/api/',
 }
+
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240

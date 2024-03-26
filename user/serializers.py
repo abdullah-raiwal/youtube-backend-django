@@ -34,3 +34,5 @@ class UserRegisterSerializer(RegisterSerializer):
                 raise serializers.ValidationError({'avatar': [str(e)]})
 
         return user
+    
+    

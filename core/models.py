@@ -1,9 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
-from rest_framework.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
-from cloudinary.uploader import upload
 from django.utils.translation import gettext as _
 
 
@@ -33,7 +31,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
 
-    avatar = CloudinaryField('avatar', )
+    avatar = CloudinaryField('avatar')
     coverImage = CloudinaryField('coverImage', blank=True)
     refreshToken = models.CharField(max_length=200, blank=True)
     createdAt = models.DateTimeField(auto_now_add=True)
@@ -47,17 +45,23 @@ class User(AbstractUser):
         return self.email
 
 
-# class Video(models.Model):
+class Video(models.Model):
 
-#     videoFile = CloudinaryField('videoFile')
-#     thumbnailFile = CloudinaryField('thumbnail')
-#     owner = models.ForeignKey("User", verbose_name=_("owner"), on_delete=models.CASCADE, related_name="videos")
-#     title  = models.CharField(_("title"), max_length=50)
-#     description = models.CharField(_("description"), max_length=50)
-#     duration = models.DecimalField(_("duration"), max_digits=5, decimal_places=2)
-#     class Meta:
-#         verbose_name = _("Video")
-#         verbose_name_plural = _("Videos")
+    videoFile = CloudinaryField(
+        'videoFile')
+    thumbnailFile = CloudinaryField('thumbnail')
+    owner = models.ForeignKey("User", verbose_name=_(
+        "owner"), on_delete=models.CASCADE, related_name="videos")
+    title = models.CharField(_("title"), max_length=50)
+    description = models.CharField(_("description"), max_length=50)
+    duration = models.DecimalField(
+        _("duration"), max_digits=5, decimal_places=2)
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
 
-#     def __str__(self):
-#         return self.name
+    class Meta:
+        verbose_name = _("Video")
+        verbose_name_plural = _("Videos")
+
+    def __str__(self):
+        return self.title

@@ -1,8 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.conf import settings
 from dj_rest_auth.views import LoginView
-from core.models import User
-import logging
 
 
 class UserLoginView(LoginView):

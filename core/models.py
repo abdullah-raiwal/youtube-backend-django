@@ -74,4 +74,13 @@ class Tweet(models.Model):
     content = models.TextField(_("content"))
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
-    
+
+
+class Subscription(models.Model):
+    subscriber = models.ForeignKey("User", verbose_name=_(
+        "subscriber"), on_delete=models.CASCADE, related_name='subscriber')
+    channel = models.ForeignKey(
+        "User", verbose_name=_(""), on_delete=models.CASCADE, related_name='channel')
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+

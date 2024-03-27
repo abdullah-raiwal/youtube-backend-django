@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from cloudinary.uploader import upload_large, upload
+from cloudinary.uploader import upload_large, upload, destroy
 from core.models import Video
 from cloudinary.exceptions import GeneralError
-from dj_rest_auth.serializers import UserDetailsSerializer
+from utils.CloudinaryUtils import extract_public_id
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -16,9 +16,6 @@ class VideoSerializer(serializers.ModelSerializer):
 
         read_only_fields = ('id', 'thumbnailFile', 'duration')
 
-    def get_owner(self, obj):
-        return obj.owner.username
-
     def upload_video(self, file):
         print()
         try:
@@ -27,7 +24,16 @@ class VideoSerializer(serializers.ModelSerializer):
         except:
             raise GeneralError('server error')
 
-    def create(self, validated_data):
+    def delete_video(self, file_url):
+        print(file_url)
+        try:
+
+            results = destroy(file_url)
+            return results
+        except:
+            raise GeneralError('server error')
+
+    def create(self,  validated_data):
 
         response = self.upload_video(self.validated_data['videoFile'])
         print(response)
@@ -38,3 +44,16 @@ class VideoSerializer(serializers.ModelSerializer):
             '.mp4', '.jpg')
         validated_data['owner'] = self.context['request'].user
         return super().create(validated_data)
+
+    def update(self, instance,  validated_data):
+
+        if 'videoFile' in validated_data.keys():
+            new_video = self.upload_video(validated_data['videoFile'])
+            # print( 'instance ->')
+            id = extract_public_id(str(instance.videoFile))
+            print(id)
+            old_video = self.delete_video(id)
+            print(old_video)
+            validated_data['videoFile'] = new_video['url']
+
+        return super().update(instance, validated_data)

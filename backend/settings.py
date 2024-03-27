@@ -1,7 +1,9 @@
 import cloudinary
+from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,7 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    'cloudinary', 
+    'cloudinary',
     'cloudinary_storage',
     'allauth',
     'allauth.account',
@@ -189,3 +191,9 @@ SPECTACULAR_SETTINGS = {
 }
 
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
+    "ROTATE_REFRESH_TOKENS": True,
+}

@@ -65,3 +65,13 @@ class Video(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Tweet(models.Model):
+
+    owner = models.ForeignKey("User", verbose_name=_(
+        "user"), on_delete=models.CASCADE, related_name="tweets")
+    content = models.TextField(_("content"))
+    createdAt = models.DateTimeField(auto_now_add=True)
+    updatedAt = models.DateTimeField(auto_now=True)
+    
